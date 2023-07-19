@@ -37,4 +37,7 @@ return {
       colorscheme = "vscode",
     },
   },
+  {
+    "tpope/vim-fugitive",
+  },
 }
