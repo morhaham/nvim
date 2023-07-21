@@ -6,7 +6,7 @@ return {
       local c = require("vscode.colors").get_colors()
       require("vscode").setup({
         -- Alternatively set style in setup
-        -- style = 'light'
+        -- style = 'light
 
         -- Enable transparent background
         transparent = false,
@@ -40,4 +40,13 @@ return {
   {
     "tpope/vim-fugitive",
   },
+  {
+    "karb94/neoscroll.nvim",
+    config = function()
+      require("neoscroll").setup()
+    end,
+  },
+  { "LazyVim/LazyVim", import = "lazyvim.plugins" },
+  { import = "lazyvim.plugins.extras.coding.copilot" },
+  { import = "plugins" },
 }
