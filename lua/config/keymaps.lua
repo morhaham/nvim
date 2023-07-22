@@ -16,7 +16,7 @@ local function map(mode, lhs, rhs, opts)
   end
 end
 
--- Resize window using <ctrl> arrow keys
+-- Resize window using <ctrl><shift> and movement keys
 map("n", "<C-S-K>", "<cmd>resize +2<cr>", { desc = "Increase window height" })
 map("n", "<C-S-J>", "<cmd>resize -2<cr>", { desc = "Decrease window height" })
 map("n", "<C-S-H>", "<cmd>vertical resize -2<cr>", { desc = "Decrease window width" })

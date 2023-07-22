@@ -46,7 +46,5 @@ return {
       require("neoscroll").setup()
     end,
   },
-  { "LazyVim/LazyVim", import = "lazyvim.plugins" },
   { import = "lazyvim.plugins.extras.coding.copilot" },
-  { import = "plugins" },
 }
