@@ -47,4 +47,5 @@ return {
     end,
   },
   { import = "lazyvim.plugins.extras.coding.copilot" },
+  "vim-test/vim-test",
 }
