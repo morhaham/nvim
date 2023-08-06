@@ -1,4 +1,3 @@
-local theme = require("tokyonight.theme")
 return {
   {
     "Mofiqul/vscode.nvim",
@@ -7,38 +6,41 @@ return {
       require("vscode").setup({
         -- Alternatively set style in setup
         -- style = 'light
-
         -- Enable transparent background
         transparent = false,
-
-        -- Enable italic comment
-        italic_comments = true,
-
-        -- Disable nvim-tree background color
-        disable_nvimtree_bg = true,
-
         -- Override colors (see ./lua/vscode/colors.lua)
         color_overrides = {
-          vscLineNumber = "#FFFFFF",
-        },
-
-        -- Override highlight groups (see ./lua/vscode/theme.lua)
-        group_overrides = {
-          -- this supports the same val table as vim.api.nvim_set_hl
-          -- use colors from this colorscheme by requiring vscode.colors!
-          Cursor = { fg = c.vscDarkBlue, bg = c.vscLightGreen, bold = true },
+          vscBack = "#1e1e1e",
         },
       })
     end,
   },
   {
+    "rose-pine/neovim",
+    name = "rose-pine",
+    config = function()
+      require("rose-pine").setup({
+        variant = "main",
+      })
+    end,
+  },
+  {
+    "oxfist/night-owl.nvim",
+    lazy = false, -- make sure we load this during startup if it is your main colorscheme
+    priority = 1000, -- make sure to load this before all the other start plugins
+  },
+  {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "vscode",
+      colorscheme = "night-owl",
     },
   },
   {
     "tpope/vim-fugitive",
+    config = function()
+      -- load the colorscheme here
+      vim.cmd.colorscheme("night-owl")
+    end,
   },
   {
     "karb94/neoscroll.nvim",
@@ -46,6 +48,47 @@ return {
       require("neoscroll").setup()
     end,
   },
-  { import = "lazyvim.plugins.extras.coding.copilot" },
   "vim-test/vim-test",
+  {
+    "nvim-lualine/lualine.nvim",
+    event = "VeryLazy",
+    opts = function(_, opts)
+      opts.theme = "night-owl"
+      table.remove(opts.sections.lualine_c, 4)
+      table.remove(opts.sections.lualine_c, 3)
+      table.insert(
+        opts.sections.lualine_c,
+        3,
+        { "filename", path = 3, symbols = { modified = "  ", readonly = "", unnamed = "" } }
+      )
+    end,
+  },
+  {
+    "folke/noice.nvim",
+    opts = {
+      cmdline = {
+        format = {
+          search_down = { icon = "?" },
+          search_up = { icon = "?" },
+        },
+      },
+    },
+  },
+  {
+    "hrsh7th/nvim-cmp",
+    opts = {
+      formatting = {
+        -- return autocomplete item without icon
+        format = function(_, item)
+          return item
+        end,
+      },
+    },
+  },
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      autoformat = false,
+    },
+  },
 }
