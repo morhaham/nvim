@@ -6,4 +6,6 @@ return {
   require("plugins.code.autopairs"),
   require("plugins.code.copilot"),
   require("plugins.code.nvim-lint"),
+  require("plugins.code.luasnip"),
+  require("plugins.code.nvim-cmp"),
 }

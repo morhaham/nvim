@@ -2,7 +2,7 @@ vim.g.mapleader = " "
 
 local options = {
   termguicolors = true, -- Enable 24 bits color in terminal
-  guicursor = "a:block,i-ci-ve:ver25", -- Set the gui cursor to nothing for each mode
+  guicursor = "n-v-c-i:block", -- Set the gui cursor to nothing for each mode
   inccommand = "nosplit", -- Show effect of command incrementally while writing it (substitution)
   showmode = false, -- Don't need to show mode
   mouse = "a", -- Enable mouse in all mode
@@ -23,10 +23,30 @@ local options = {
   scrolloff = 12, -- Keep at least 12 lines above the cursor.
   wrap = false, -- Disable line wrap
   colorcolumn = "80", -- Color the 120 character as a limit for line length
-  completeopt = "menuone,noinsert,noselect",
+  completeopt = "menu,menuone,noselect", -- Completion options
+  clipboard = "unnamedplus", -- Sync to system clipboard
+  confirm = true, -- Confirm to save changes before exiting modified buffer
+  conceallevel = 3, -- Hide * markup for bold and italic
+  formatoptions = "jcroqlnt", -- tcqj
+  grepformat = "%f:%l:%c:%m",
+  grepprg = "rg --vimgrep",
+  ignorecase = true, -- Ignore case
+  smartcase = true, -- Don't ignore case when search includes capitals
+  list = true, -- Show invisible characters
+  pumblend = 10, -- Popup blend
+  pumheight = 10, -- Maximum number of entries in a popup
+  sessionoptions = "buffers,curdir,tabpages,winsize,help,globals,skiprtp,folds",
+  shiftround = true, -- Round indent
+  shortmess = vim.o.shortmess .. "WcCI", -- Don't show some warnings
+  sidescrolloff = 8, -- Columns of context
+  splitbelow = true, -- Put new windows below current
+  splitright = true, -- Put new windows right of current
+  splitkeep = "screen",
+  virtualedit = "block", -- Allow cursor to move where there is no text in visual block mode
+  timeoutlen = 300, -- Time to wait for a mapped sequence to complete (in milliseconds)
+  wildmode = "longest:full,full", -- Command-line completion mode
+  winminwidth = 5, -- Minimum window width
 }
-
-vim.opt.clipboard:append("unnamedplus") -- Copy to system clipboard
 
 for opt, val in pairs(options) do
   vim.o[opt] = val

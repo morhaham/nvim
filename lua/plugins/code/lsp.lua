@@ -15,15 +15,28 @@ return {
     dependencies = {
       "williamboman/mason.nvim",
     },
-    config = function()
-      require("mason-lspconfig").setup()
+    config = function(_, opts)
+      require("mason-lspconfig").setup(opts)
     end,
-    opts = { ensure_installed = { "tsserver" } },
+    opts = function()
+      local lspconfig = require("lspconfig")
+      local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
+      local default_setup = function(server)
+        lspconfig[server].setup({
+          capabilities = lsp_capabilities,
+        })
+      end
+      return {
+        ensure_installed = { "tsserver" },
+        handlers = { default_setup },
+      }
+    end,
   },
   {
     "neovim/nvim-lspconfig",
     dependencies = {
       "williamboman/mason-lspconfig.nvim",
+      "nvim-cmp",
     },
     config = function()
       local lspconfig = require("lspconfig")
@@ -34,8 +47,6 @@ return {
         lspconfig[server_name].setup(config)
       end
 
-      -- Use LspAttach autocommand to only map the following keys
-      -- after the language server attaches to the current buffer
       local map = require("config.utils").map
       vim.api.nvim_create_autocmd("LspAttach", {
         group = vim.api.nvim_create_augroup("UserLspConfig", { clear = true }),
@@ -51,18 +62,12 @@ return {
           map("n", "K", vim.lsp.buf.hover, opts, "Show symbol information")
           map(
             "n",
-            "<leader>gi",
+            "gi",
             vim.lsp.buf.implementation,
             opts,
             "Go to implementation"
           )
-          map(
-            "n",
-            "<leader>ss",
-            vim.lsp.buf.signature_help,
-            opts,
-            "Show signature"
-          )
+          map("n", "gs", vim.lsp.buf.signature_help, opts, "Show signature")
           map(
             "n",
             "<leader>wa",
@@ -97,12 +102,30 @@ return {
           )
           map(
             "n",
-            "<leader>rq",
+            "gr",
             vim.lsp.buf.references,
             opts,
             "References quickfix list"
           )
         end,
+      })
+      local cmp = require("cmp")
+      cmp.setup({
+        sources = {
+          { name = "nvim_lsp" },
+        },
+        mapping = cmp.mapping.preset.insert({
+          -- Enter key confirms completion item
+          ["<TAB>"] = cmp.mapping.confirm({ select = true }),
+
+          -- Ctrl + space triggers completion menu
+          ["<C-Space>"] = cmp.mapping.complete(),
+        }),
+        snippet = {
+          expand = function(args)
+            require("luasnip").lsp_expand(args.body)
+          end,
+        },
       })
     end,
     keys = {

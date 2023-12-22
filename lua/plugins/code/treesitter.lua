@@ -8,6 +8,11 @@ return {
       "nvim-ts-context-commentstring",
       "nvim-treesitter-textobjects",
     },
+    config = function()
+      vim.o.foldmethod = "expr" -- Set foldmethod to expr for treesitter folding
+      vim.o.foldexpr = "nvim_treesitter#foldexpr()" -- Treesitter folding
+      -- nofoldenable = true, -- Disable folding by default
+    end,
   },
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
