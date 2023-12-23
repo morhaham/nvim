@@ -1,5 +1,3 @@
-local table_contains = require("config.utils").table_contains
-
 return {
   "mfussenegger/nvim-lint",
   event = { "VeryLazy" },
@@ -9,17 +7,20 @@ return {
     vim.api.nvim_create_autocmd(opts.events, {
       group = vim.api.nvim_create_augroup("nvim-lint", { clear = true }),
       callback = function()
-        lint.try_lint()
+        lint.try_lint(nil, { ignore_errors = true })
       end,
     })
   end,
-  opts = {
-    events = { "BufWritePost", "BufReadPost", "InsertLeave" },
-    linters_by_ft = {
-      javascript = { "eslint" },
-      typescript = { "eslint" },
-      javascriptreact = { "eslint" },
-      typescriptreact = { "eslint" },
-    },
-  },
+  opts = function()
+    local linters = { eslint = { "eslint" } }
+    return {
+      events = { "BufWritePost", "BufReadPost", "InsertLeave" },
+      linters_by_ft = {
+        javascript = linters.eslint,
+        typescript = linters.eslint,
+        javascriptreact = linters.eslint,
+        typescriptreact = linters.eslint,
+      },
+    }
+  end,
 }

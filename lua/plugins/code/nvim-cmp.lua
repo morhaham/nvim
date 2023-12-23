@@ -3,6 +3,6 @@ return {
   {
     "hrsh7th/cmp-nvim-lsp",
     name = "cmp-nvim-lsp",
-    dependencies = { "nvim-cmp" },
   },
+  { "saadparwaiz1/cmp_luasnip" },
 }

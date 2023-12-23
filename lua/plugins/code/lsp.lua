@@ -1,3 +1,6 @@
+local has_words_before = require("config.utils").has_words_before
+local attachLspKeymaps = require("plugins.code.helpers").attachLspKeymaps
+
 return {
   {
     "williamboman/mason.nvim",
@@ -27,7 +30,7 @@ return {
         })
       end
       return {
-        ensure_installed = { "tsserver" },
+        ensure_installed = { "tsserver", "tailwindcss" },
         handlers = { default_setup },
       }
     end,
@@ -42,88 +45,58 @@ return {
       local lspconfig = require("lspconfig")
       local servers = {
         tsserver = {},
+        tailwindcss = {},
       }
       for server_name, config in pairs(servers) do
         lspconfig[server_name].setup(config)
       end
 
-      local map = require("config.utils").map
       vim.api.nvim_create_autocmd("LspAttach", {
         group = vim.api.nvim_create_augroup("UserLspConfig", { clear = true }),
-        callback = function(ev)
-          -- Enable completion triggered by <c-x><c-o>
-          vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
-
-          -- Buffer local mappings.
-          -- See `:help vim.lsp.*` for documentation on any of the below functions
-          local opts = { buffer = ev.buf }
-          map("n", "gD", vim.lsp.buf.declaration, opts, "Go to declaration")
-          map("n", "gd", vim.lsp.buf.definition, opts, "Go to definition")
-          map("n", "K", vim.lsp.buf.hover, opts, "Show symbol information")
-          map(
-            "n",
-            "gi",
-            vim.lsp.buf.implementation,
-            opts,
-            "Go to implementation"
-          )
-          map("n", "gs", vim.lsp.buf.signature_help, opts, "Show signature")
-          map(
-            "n",
-            "<leader>wa",
-            vim.lsp.buf.add_workspace_folder,
-            opts,
-            "Add workspace folder"
-          )
-          map(
-            "n",
-            "<leader>wr",
-            vim.lsp.buf.remove_workspace_folder,
-            opts,
-            "Remove workspace folder"
-          )
-          map("n", "<leader>wl", function()
-            print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-          end, opts, "List workspace folders")
-          map(
-            "n",
-            "<leader>gt",
-            vim.lsp.buf.type_definition,
-            opts,
-            "Go to type definition"
-          )
-          map("n", "<leader>rn", vim.lsp.buf.rename, opts, "Rename symbol")
-          map(
-            { "n", "v" },
-            "<leader>ca",
-            vim.lsp.buf.code_action,
-            opts,
-            "Code action"
-          )
-          map(
-            "n",
-            "gr",
-            vim.lsp.buf.references,
-            opts,
-            "References quickfix list"
-          )
-        end,
+        callback = attachLspKeymaps,
       })
-      local cmp = require("cmp")
-      cmp.setup({
-        sources = {
-          { name = "nvim_lsp" },
-        },
-        mapping = cmp.mapping.preset.insert({
-          -- Enter key confirms completion item
-          ["<TAB>"] = cmp.mapping.confirm({ select = true }),
 
-          -- Ctrl + space triggers completion menu
-          ["<C-Space>"] = cmp.mapping.complete(),
+      local cmp = require("cmp")
+      local luasnip = require("luasnip")
+
+      cmp.setup({
+        sources = cmp.config.sources({
+          { name = "luasnip" },
+          { name = "nvim_lsp" },
+        }),
+        mapping = cmp.mapping.preset.insert({
+          ["<Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              local entry = cmp.get_selected_entry()
+              if not entry then
+                cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+              else
+                cmp.confirm()
+              end
+            -- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
+            -- that way you will only jump inside the snippet region
+            elseif luasnip.expand_or_jumpable() then
+              luasnip.expand_or_jump()
+            elseif has_words_before() then
+              cmp.complete()
+            else
+              fallback()
+            end
+          end, { "i", "s" }),
+
+          ["<S-Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_prev_item()
+            elseif luasnip.jumpable(-1) then
+              luasnip.jump(-1)
+            else
+              fallback()
+            end
+          end, { "i", "s" }),
         }),
         snippet = {
           expand = function(args)
-            require("luasnip").lsp_expand(args.body)
+            luasnip.lsp_expand(args.body)
           end,
         },
       })
