@@ -1,16 +1,16 @@
 local map = require("config.utils").map
 
-map("n", "<C-S-K>", "<cmd>resize -2<cr>", { desc = "Increase window height" })
-map("n", "<C-S-J>", "<cmd>resize +2<cr>", { desc = "Decrease window height" })
+map("n", "<C-S-k>", "<cmd>resize -2<cr>", { desc = "Increase window height" })
+map("n", "<C-S-j>", "<cmd>resize +2<cr>", { desc = "Decrease window height" })
 map(
   "n",
-  "<C-S-H>",
+  "<C-S-h>",
   "<cmd>vertical resize -2<cr>",
   { desc = "Decrease window width" }
 )
 map(
   "n",
-  "<C-S-L>",
+  "<C-S-l>",
   "<cmd>vertical resize +2<cr>",
   { desc = "Decrease window width" }
 )
@@ -34,4 +34,17 @@ map(
   "<ESC>",
   "<cmd>noh<CR><ESC>",
   { desc = "Escape to clear search highlight" }
+)
+
+map(
+  { "n", "v" },
+  "<leader>q",
+  "<cmd>q!<CR>",
+  { desc = "Quit buffer without saving" }
+)
+map(
+  { "n", "v" },
+  "<leader>wq",
+  "<cmd>wq<CR>",
+  { desc = "Save buffer and quit" }
 )

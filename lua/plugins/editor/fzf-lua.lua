@@ -2,6 +2,29 @@ return {
   "ibhagwan/fzf-lua",
   -- optional for icon support
   dependencies = { "nvim-tree/nvim-web-devicons" },
+  opts = function()
+    local actions = require("fzf-lua").actions
+    return {
+      actions = {
+        files = {
+          ["default"] = actions.file_edit_or_qf,
+          ["ctrl-h"] = actions.file_split,
+          ["ctrl-v"] = actions.file_vsplit,
+          ["ctrl-t"] = actions.file_tabedit,
+          ["alt-q"] = actions.file_sel_to_qf,
+          ["alt-l"] = actions.file_sel_to_ll,
+        },
+        buffers = {
+          -- providers that inherit these actions:
+          --   buffers, tabs, lines, blines
+          ["default"] = actions.buf_edit,
+          ["ctrl-h"] = actions.buf_split,
+          ["ctrl-v"] = actions.buf_vsplit,
+          ["ctrl-t"] = actions.buf_tabedit,
+        },
+      },
+    }
+  end,
   keys = {
     {
       "<leader>ff",
@@ -34,14 +57,14 @@ return {
       desc = "Find in argument list",
     },
     {
-      "<leader>g",
+      "<leader>/",
       "<cmd>lua require('fzf-lua').live_grep({ resume = true })<CR>",
-      desc = "live grep",
+      desc = "Live grep",
     },
     {
-      "<leader><C-g>",
+      "<leader><C-/>",
       "<cmd>lua require('fzf-lua').live_grep({ cmd = [[rg --color=always --smart-case -uuu ]] })<CR>",
-      desc = "live grep no ignores",
+      desc = "Live grep no ignores",
     },
   },
 }
