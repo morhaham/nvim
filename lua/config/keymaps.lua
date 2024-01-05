@@ -1,16 +1,16 @@
 local map = require("config.utils").map
 
-map("n", "<C-S-k>", "<cmd>resize -2<cr>", { desc = "Increase window height" })
-map("n", "<C-S-j>", "<cmd>resize +2<cr>", { desc = "Decrease window height" })
+map("n", "<C-S-K>", "<cmd>resize -2<cr>", { desc = "Increase window height" })
+map("n", "<C-S-J>", "<cmd>resize +2<cr>", { desc = "Decrease window height" })
 map(
   "n",
-  "<C-S-h>",
+  "<C-S-H>",
   "<cmd>vertical resize -2<cr>",
   { desc = "Decrease window width" }
 )
 map(
   "n",
-  "<C-S-l>",
+  "<C-S-L>",
   "<cmd>vertical resize +2<cr>",
   { desc = "Decrease window width" }
 )
@@ -47,4 +47,11 @@ map(
   "<leader>wq",
   "<cmd>wq<CR>",
   { desc = "Save buffer and quit" }
+)
+
+map(
+  { "n" },
+  "<leader>e",
+  "<cmd>vsp %:h<CR>",
+  { desc = "Open file explorer in vertival split" }
 )

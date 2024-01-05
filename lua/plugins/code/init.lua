@@ -8,4 +8,5 @@ return {
   require("plugins.code.nvim-lint"),
   require("plugins.code.luasnip"),
   require("plugins.code.nvim-cmp"),
+  require("plugins.code.mini-ai"),
 }

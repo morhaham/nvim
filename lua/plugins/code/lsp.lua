@@ -40,6 +40,7 @@ return {
     dependencies = {
       "williamboman/mason-lspconfig.nvim",
       "nvim-cmp",
+      "typescript-tools",
     },
     config = function()
       local lspconfig = require("lspconfig")
@@ -121,6 +122,20 @@ return {
         "<leader>dl",
         "<cmd>lua vim.diagnostic.setloclist()<CR>",
         desc = "Diagnostic location list",
+      },
+    },
+  },
+  {
+    "pmizio/typescript-tools.nvim",
+    name = "typescript-tools",
+    opts = {
+      expose_as_code_action = { "all" },
+    },
+    keys = {
+      {
+        "<leader>oi",
+        "<cmd>TSToolsOrganizeImports<cr>",
+        "Organize imports",
       },
     },
   },

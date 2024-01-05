@@ -9,7 +9,13 @@ M.attachLspKeymaps = function(ev)
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   local opts = { buffer = ev.buf }
   map("n", "gD", vim.lsp.buf.declaration, opts, "Go to declaration")
-  map("n", "gd", vim.lsp.buf.definition, opts, "Go to definition")
+  map(
+    "n",
+    "gd",
+    "<cmd>vsp | lua vim.lsp.buf.definition()<CR>",
+    opts,
+    "Go to definition"
+  )
   map("n", "K", vim.lsp.buf.hover, opts, "Show symbol information")
   map("n", "gi", vim.lsp.buf.implementation, opts, "Go to implementation")
   map("n", "gs", vim.lsp.buf.signature_help, opts, "Show signature")

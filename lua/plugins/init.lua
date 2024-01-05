@@ -3,4 +3,5 @@ return {
   require("plugins.ui"),
   require("plugins.code"),
   require("plugins.editor"),
+  require("plugins.utils"),
 }
