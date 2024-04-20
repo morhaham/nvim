@@ -9,4 +9,5 @@ return {
   require("plugins.code.luasnip"),
   require("plugins.code.nvim-cmp"),
   require("plugins.code.mini-ai"),
+  require("plugins.code.go"),
 }

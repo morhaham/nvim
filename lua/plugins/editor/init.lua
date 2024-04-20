@@ -5,4 +5,5 @@ return {
   require("plugins.editor.fugitive"),
   require("plugins.editor.flash"),
   require("plugins.editor.auto-session"),
+  require("plugins.editor.bidi"),
 }

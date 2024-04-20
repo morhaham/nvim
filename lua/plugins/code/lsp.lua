@@ -7,16 +7,12 @@ return {
     config = function()
       require("mason").setup()
     end,
-    opts = {
-      ensure_installed = {
-        "stylua",
-      },
-    },
   },
   {
     "williamboman/mason-lspconfig.nvim",
     dependencies = {
       "williamboman/mason.nvim",
+      "neovim/nvim-lspconfig",
     },
     config = function(_, opts)
       require("mason-lspconfig").setup(opts)
@@ -30,7 +26,13 @@ return {
         })
       end
       return {
-        ensure_installed = { "tsserver", "tailwindcss" },
+        ensure_installed = {
+          "tsserver",
+          "tailwindcss",
+          "gopls",
+          "golangci_lint_ls",
+          "templ",
+        },
         handlers = { default_setup },
       }
     end,
@@ -38,7 +40,6 @@ return {
   {
     "neovim/nvim-lspconfig",
     dependencies = {
-      "williamboman/mason-lspconfig.nvim",
       "nvim-cmp",
       "typescript-tools",
     },

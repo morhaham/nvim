@@ -5,9 +5,9 @@ return {
     build = ":TSUpdate",
     event = { "BufEnter" },
     dependencies = {
-      "nvim-ts-context-commentstring",
-      "treesitter-context",
-      "treesitter-textobjects",
+      -- "nvim-ts-context-commentstring",
+      -- "treesitter-context",
+      -- "treesitter-textobjects",
       "mini.ai",
     },
     config = function()
@@ -15,9 +15,10 @@ return {
       vim.o.foldmethod = "expr" -- Set foldmethod to expr for treesitter folding
       vim.o.foldexpr = "nvim_treesitter#foldexpr()" -- Treesitter folding
       -- vim.o.nofoldenable = true -- Disable folding by default
+      vim.cmd([[set nofoldenable]]) -- Disable folding by default
     end,
   },
-  {
+  --[[ {
     "nvim-treesitter/nvim-treesitter-context",
     name = "treesitter-context",
     opts = {
@@ -104,5 +105,5 @@ return {
         },
       })
     end,
-  },
+  }, ]]
 }

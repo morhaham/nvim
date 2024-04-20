@@ -8,5 +8,5 @@ return {
     "hrsh7th/cmp-nvim-lsp",
     name = "cmp-nvim-lsp",
   },
-  { "saadparwaiz1/cmp_luasnip" },
+  { "saadparwaiz1/cmp_luasnip", name = "cmp_luasnip" },
 }

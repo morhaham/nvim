@@ -5,20 +5,25 @@ return {
   opts = function()
     local actions = require("fzf-lua").actions
     return {
+      keymap = {
+        fzf = {
+          ["ctrl-a"] = "toggle-all",
+        },
+      },
       actions = {
         files = {
           ["default"] = actions.file_edit_or_qf,
-          ["ctrl-h"] = actions.file_split,
+          ["ctrl-s"] = actions.file_split,
           ["ctrl-v"] = actions.file_vsplit,
           ["ctrl-t"] = actions.file_tabedit,
-          ["alt-q"] = actions.file_sel_to_qf,
-          ["alt-l"] = actions.file_sel_to_ll,
+          ["ctrl-q"] = actions.file_sel_to_qf,
+          ["ctrl-l"] = actions.file_sel_to_ll,
         },
         buffers = {
           -- providers that inherit these actions:
           --   buffers, tabs, lines, blines
           ["default"] = actions.buf_edit,
-          ["ctrl-h"] = actions.buf_split,
+          ["ctrl-s"] = actions.buf_split,
           ["ctrl-v"] = actions.buf_vsplit,
           ["ctrl-t"] = actions.buf_tabedit,
         },
@@ -62,7 +67,7 @@ return {
       desc = "Live grep",
     },
     {
-      "<leader><C-/>",
+      "<leader><C-_>", -- since tmux maps <C-/> to <C-_>
       "<cmd>lua require('fzf-lua').live_grep({ cmd = [[rg --color=always --smart-case -uuu ]] })<CR>",
       desc = "Live grep no ignores",
     },

@@ -16,11 +16,11 @@ return {
           "ts_context_commentstring.integrations.comment_nvim"
         ).create_pre_hook(),
         opleader = {
-          line = "<C-/>",
+          line = "<C-_>", -- since tmux maps <C-/> to <C-_>
           block = "<C-b>",
         },
         extra = {
-          eol = "<C-/>",
+          eol = "<C-_>", -- since tmux maps <C-/> to <C-_>
         },
       })
     end,
