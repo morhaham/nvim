@@ -14,7 +14,7 @@ return {
   opts = function()
     local linters = { eslint = { "eslint" } }
     return {
-      events = { "BufWritePost", "BufReadPost", "InsertLeave" },
+      events = { "BufWritePost" },
       linters_by_ft = {
         javascript = linters.eslint,
         typescript = linters.eslint,

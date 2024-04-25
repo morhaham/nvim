@@ -1,16 +1,29 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
-    version = "*",
     build = ":TSUpdate",
     event = { "BufEnter" },
     dependencies = {
       -- "nvim-ts-context-commentstring",
-      -- "treesitter-context",
+      "treesitter-context",
       -- "treesitter-textobjects",
-      "mini.ai",
     },
     config = function()
+      local configs = require("nvim-treesitter.configs")
+      configs.setup({
+        ensure_installed = {
+          "lua",
+          "vim",
+          "vimdoc",
+          "javascript",
+          "typescript",
+          "go",
+          "html",
+        },
+        sync_install = false,
+        highlight = { enable = true },
+        indent = { enable = true },
+      })
       ---@diagnostic disable-next-line: undefined-global
       vim.o.foldmethod = "expr" -- Set foldmethod to expr for treesitter folding
       vim.o.foldexpr = "nvim_treesitter#foldexpr()" -- Treesitter folding
@@ -18,7 +31,7 @@ return {
       vim.cmd([[set nofoldenable]]) -- Disable folding by default
     end,
   },
-  --[[ {
+  {
     "nvim-treesitter/nvim-treesitter-context",
     name = "treesitter-context",
     opts = {
@@ -105,5 +118,5 @@ return {
         },
       })
     end,
-  }, ]]
+  },
 }

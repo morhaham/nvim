@@ -5,4 +5,6 @@ return {
   require("plugins.editor.fugitive"),
   require("plugins.editor.flash"),
   require("plugins.editor.auto-session"),
+  require("plugins.editor.harpoon"),
+  require("plugins.editor.nvim-neoclip"),
 }

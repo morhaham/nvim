@@ -5,6 +5,12 @@ return {
     priority = 1000,
     lazy = false,
     config = function()
+      require("rose-pine").setup({
+        highlight_groups = {
+          StatusLineTerm = { fg = "subtle", bg = "surface" },
+          StatusLineTermNC = { fg = "muted", bg = "surface", blend = 60 },
+        },
+      })
       vim.cmd("colorscheme rose-pine")
     end,
   },

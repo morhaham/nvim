@@ -9,10 +9,7 @@ return {
   },
   {
     "williamboman/mason-lspconfig.nvim",
-    dependencies = {
-      "williamboman/mason.nvim",
-      "neovim/nvim-lspconfig",
-    },
+    dependencies = { "williamboman/mason.nvim", "lspconfig" },
     config = function(_, opts)
       require("mason-lspconfig").setup(opts)
     end,
@@ -26,7 +23,7 @@ return {
       end
       return {
         ensure_installed = {
-          "tsserver",
+          -- "tsserver",
           "tailwindcss",
           "gopls",
           "golangci_lint_ls",
@@ -38,20 +35,8 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
-    dependencies = {
-      "nvim-cmp",
-      "typescript-tools",
-    },
+    name = "lspconfig",
     config = function()
-      local lspconfig = require("lspconfig")
-      local servers = {
-        tsserver = {},
-        tailwindcss = {},
-      }
-      for server_name, config in pairs(servers) do
-        lspconfig[server_name].setup(config)
-      end
-
       vim.api.nvim_create_autocmd("LspAttach", {
         group = vim.api.nvim_create_augroup("UserLspConfig", { clear = true }),
         callback = attachLspKeymaps,
@@ -83,6 +68,7 @@ return {
   {
     "pmizio/typescript-tools.nvim",
     name = "typescript-tools",
+    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
     opts = {
       expose_as_code_action = { "all" },
     },
